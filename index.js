@@ -145,6 +145,17 @@ export default class Search extends Component {
     }
   };
 
+  focusTextInput = () => {
+    const openKeyboard = setTimeout(() => {
+      this.textInput.focus();
+    }, this.props.animationDuration);
+    this.openKeyboardTimer = openKeyboard;
+  }
+
+  cancelTextInputFocus = () => {
+    clearTimeout(this.openKeyboardTimer);
+  }
+
   _doHide = () => {
     const { clearOnHide } = this.props;
     this.setState({ show: false });
