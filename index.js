@@ -121,6 +121,7 @@ export default class Search extends Component {
     } else {
       this.setState({ top: new Animated.Value(0) });
     }
+    focusOnLayout && this.focusTextInput();
   };
 
   hide = () => {
@@ -141,6 +142,7 @@ export default class Search extends Component {
       this.setState({ top: new Animated.Value(INITIAL_TOP) });
       this._doHide();
     }
+    focusOnLayout && this.cancelTextInputFocus();
   };
 
   focusTextInput = () => {
@@ -298,7 +300,6 @@ export default class Search extends Component {
               )}
               <TextInput
                 ref={ref => (this.textInput = ref)}
-                onLayout={() => focusOnLayout && this.textInput.focus()}
                 style={[
                   styles.input,
                   {
