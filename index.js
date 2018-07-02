@@ -97,6 +97,7 @@ export default class Search extends Component {
     super(props);
     this.state = {
       input: '',
+      dims: Dimensions.get("window"),
       show: props.showOnLoad,
       top: new Animated.Value(
         props.showOnLoad ? 0 : INITIAL_TOP + props.heightAdjust
@@ -221,6 +222,16 @@ export default class Search extends Component {
     return some(collection, item => this._depthFirstSearch(item, input));
   };
 
+  _dimHandler = dims => this.setState({dims: dims.window});
+
+  componentWillMount() {
+    Dimensions.addEventListener("change", this._dimHandler);
+  }
+
+  componentWillUnmount() {
+    Dimensions.removeEventListener("change", this._dimHandler);
+  }
+
   render = () => {
     const {
       placeholder,
@@ -265,7 +276,7 @@ export default class Search extends Component {
           }
         ]}>
         {this.state.show && (
-          <View style={[styles.navWrapper, { backgroundColor }]}>
+          <View style={[styles.navWrapper, { backgroundColor }, {width:this.state.dims.width}]}>
             {Platform.OS === 'ios' &&
               iOSPadding && <View style={{ height: 20, backgroundColor: iOSPaddingBackgroundColor }} />}
             <View
