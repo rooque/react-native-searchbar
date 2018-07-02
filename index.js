@@ -313,6 +313,7 @@ export default class Search extends Component {
                 style={[
                   styles.input,
                   {
+                    width:this.state.dims.width-120,
                     fontSize: fontSize,
                     color: textColor,
                     fontFamily: fontFamily,
