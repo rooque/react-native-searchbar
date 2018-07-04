@@ -399,6 +399,6 @@ const styles = StyleSheet.create({
       ios: { height: 30 },
       android: { height: 50 }
     }),
-    width: Dimensions.get('window').width-120
+    width: Dimensions.get('window').width - 120
   }
 });
