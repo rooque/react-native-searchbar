@@ -222,7 +222,7 @@ export default class Search extends Component {
     return some(collection, item => this._depthFirstSearch(item, input));
   };
 
-  _dimHandler = dims => this.setState({dims: dims.window});
+  _dimHandler = dims => this.setState({dimensions: dims.window});
 
   componentWillMount() {
     Dimensions.addEventListener("change", this._dimHandler);
