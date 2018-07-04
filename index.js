@@ -97,7 +97,7 @@ export default class Search extends Component {
     super(props);
     this.state = {
       input: '',
-      dims: Dimensions.get("window"),
+      dimensions: Dimensions.get("window"),
       show: props.showOnLoad,
       top: new Animated.Value(
         props.showOnLoad ? 0 : INITIAL_TOP + props.heightAdjust
@@ -379,7 +379,6 @@ const styles = StyleSheet.create({
     shadowRadius: 5
   },
   navWrapper: {
-    width: Dimensions.get('window').width
   },
   nav: {
     ...Platform.select({
@@ -399,6 +398,5 @@ const styles = StyleSheet.create({
       ios: { height: 30 },
       android: { height: 50 }
     }),
-    width: Dimensions.get('window').width - 120
   }
 });
