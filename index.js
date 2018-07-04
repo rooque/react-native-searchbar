@@ -276,7 +276,7 @@ export default class Search extends Component {
           }
         ]}>
         {this.state.show && (
-          <View style={[styles.navWrapper, { backgroundColor }, {width:this.state.dims.width}]}>
+          <View style={[styles.navWrapper, { backgroundColor }, {width:this.state.dimensions.width}]}>
             {Platform.OS === 'ios' &&
               iOSPadding && <View style={{ height: 20, backgroundColor: iOSPaddingBackgroundColor }} />}
             <View
@@ -313,7 +313,7 @@ export default class Search extends Component {
                 style={[
                   styles.input,
                   {
-                    width:this.state.dims.width-120,
+                    width:this.state.dimensions.width-120,
                     fontSize: fontSize,
                     color: textColor,
                     fontFamily: fontFamily,
@@ -379,6 +379,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5
   },
   navWrapper: {
+    width: Dimensions.get('window').width
   },
   nav: {
     ...Platform.select({
@@ -398,5 +399,6 @@ const styles = StyleSheet.create({
       ios: { height: 30 },
       android: { height: 50 }
     }),
+    width: Dimensions.get('window').width-120
   }
 });
