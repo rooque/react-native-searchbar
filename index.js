@@ -276,7 +276,7 @@ export default class Search extends Component {
           }
         ]}>
         {this.state.show && (
-          <View style={[styles.navWrapper, { backgroundColor }, {width:this.state.dimensions.width}]}>
+          <View style={[{ backgroundColor }, {width:this.state.dimensions.width}]}>
             {Platform.OS === 'ios' &&
               iOSPadding && <View style={{ height: 20, backgroundColor: iOSPaddingBackgroundColor }} />}
             <View
@@ -377,9 +377,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     elevation: 2,
     shadowRadius: 5
-  },
-  navWrapper: {
-    width: Dimensions.get('window').width
   },
   nav: {
     ...Platform.select({
