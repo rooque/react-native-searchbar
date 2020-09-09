@@ -235,7 +235,7 @@ export default class Search extends Component {
 
   _dimHandler = dims => this.setState({dimensions: dims.window});
 
-  componentWillMount() {
+  componentDidMount() {
     Dimensions.addEventListener("change", this._dimHandler);
   }
 
