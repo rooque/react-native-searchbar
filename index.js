@@ -46,6 +46,7 @@ export default class Search extends Component {
     hideBack: PropTypes.bool,
     hideX: PropTypes.bool,
     iOSPadding: PropTypes.bool,
+    iOSPaddingBackgroundColor: PropTypes.string,
     iOSHideShadow: PropTypes.bool,
     clearOnShow: PropTypes.bool,
     clearOnHide: PropTypes.bool,
@@ -54,7 +55,6 @@ export default class Search extends Component {
     autoCorrect: PropTypes.bool,
     autoCapitalize: PropTypes.string,
     keyboardAppearance: PropTypes.string,
-    keyboardType: PropTypes.string,
     fontFamily: PropTypes.string,
     allDataOnEmptySearch: PropTypes.bool,
     editable: PropTypes.bool
@@ -77,6 +77,7 @@ export default class Search extends Component {
     hideBack: false,
     hideX: false,
     iOSPadding: true,
+    iOSPaddingBackgroundColor: 'transparent',
     iOSHideShadow: false,
     clearOnShow: false,
     clearOnHide: true,
@@ -96,6 +97,7 @@ export default class Search extends Component {
     super(props);
     this.state = {
       input: '',
+      dimensions: Dimensions.get("window"),
       show: props.showOnLoad,
       top: new Animated.Value(
         props.showOnLoad ? 0 : INITIAL_TOP + props.heightAdjust
@@ -105,6 +107,10 @@ export default class Search extends Component {
 
   getValue = () => {
     return this.state.input;
+  };
+
+  setValue = (input) => {
+    return this.setState({input})
   };
 
   show = () => {
@@ -227,6 +233,16 @@ export default class Search extends Component {
     return some(collection, item => this._depthFirstSearch(item, input));
   };
 
+  _dimHandler = dims => this.setState({dimensions: dims.window});
+
+  componentWillMount() {
+    Dimensions.addEventListener("change", this._dimHandler);
+  }
+
+  componentWillUnmount() {
+    Dimensions.removeEventListener("change", this._dimHandler);
+  }
+
   render = () => {
     const {
       placeholder,
@@ -240,6 +256,7 @@ export default class Search extends Component {
       hideBack,
       hideX,
       iOSPadding,
+      iOSPaddingBackgroundColor,
       iOSHideShadow,
       onSubmitEditing,
       onFocus,
@@ -254,8 +271,7 @@ export default class Search extends Component {
       closeButtonAccessibilityLabel,
       backCloseSize,
       fontSize,
-      editable,
-      keyboardType
+      editable
     } = this.props;
     return (
       <Animated.View
@@ -271,9 +287,9 @@ export default class Search extends Component {
           }
         ]}>
         {this.state.show && (
-          <View style={[styles.navWrapper, { backgroundColor }]}>
+          <View style={[{ backgroundColor }, {width:this.state.dimensions.width}]}>
             {Platform.OS === 'ios' &&
-              iOSPadding && <View style={{ height: 20 }} />}
+              iOSPadding && <View style={{ height: 20, backgroundColor: iOSPaddingBackgroundColor }} />}
             <View
               style={[
                 styles.nav,
@@ -308,6 +324,7 @@ export default class Search extends Component {
                 style={[
                   styles.input,
                   {
+                    width:this.state.dimensions.width-120,
                     fontSize: fontSize,
                     color: textColor,
                     fontFamily: fontFamily,
@@ -328,7 +345,6 @@ export default class Search extends Component {
                 returnKeyType="search"
                 autoCorrect={autoCorrect}
                 autoCapitalize={autoCapitalize}
-                keyboardType={keyboardType || "default"}
                 keyboardAppearance={keyboardAppearance}
                 editable={editable}
               />
@@ -372,9 +388,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     elevation: 2,
     shadowRadius: 5
-  },
-  navWrapper: {
-    width: Dimensions.get('window').width
   },
   nav: {
     ...Platform.select({
